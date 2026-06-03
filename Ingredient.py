@@ -6,19 +6,18 @@ class Ingredient:
 
     @property
     def quantity(self):
-        return self.quantity
+        return self._quantity
 
     @quantity.setter
     def quantity(self, value):
-        try:
-            float(value)
-        except Exception as e:
-            raise ValueError("Введенное значение это не число")
-        value = float(value)
-        if value <= 0:
-            raise ValueError("Количество должно быть положительным")
+        if type(value) in [float, int]:
+            value = float(value)
+            if value <= 0:
+                raise ValueError("Количество должно быть положительным")
+            else:
+                self._quantity = value
         else:
-            self._quantity = value
+            raise ValueError("Введённое значение это не число")
 
     def __str__(self):
         return self.name + ": " + str(self._quantity) + " " + self.unit
